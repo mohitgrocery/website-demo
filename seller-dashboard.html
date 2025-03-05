@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fresh Mart - Seller Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="seller-dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <h1><a href="index.html">Fresh Mart</a></h1>
+            </div>
+            <div class="nav-items">
+                <div class="user-menu">
+                    <button id="userMenuBtn" class="user-menu-btn">
+                        <i class="fas fa-user"></i>
+                        <span id="sellerName">Seller</span>
+                    </button>
+                    <div class="user-dropdown">
+                        <a href="#" onclick="logout()">Logout</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="dashboard-container">
+        <div class="dashboard-sidebar">
+            <div class="seller-profile">
+                <div class="profile-image">
+                    <i class="fas fa-store"></i>
+                </div>
+                <h2 id="storeName">Store Name</h2>
+                <p id="sellerEmail">seller@email.com</p>
+            </div>
+            <div class="sidebar-menu">
+                <button class="menu-item active" data-section="overview">
+                    <i class="fas fa-home"></i> Dashboard
+                </button>
+                <button class="menu-item" data-section="all-orders">
+                    <i class="fas fa-shopping-bag"></i> All Orders
+                </button>
+                <button class="menu-item" data-section="pending-orders">
+                    <i class="fas fa-clock"></i> Pending Orders
+                </button>
+                <button class="menu-item" data-section="confirmed-orders">
+                    <i class="fas fa-check-circle"></i> Confirmed Orders
+                </button>
+                <button class="menu-item" data-section="delivered-orders">
+                    <i class="fas fa-truck"></i> Delivered Orders
+                </button>
+                <button class="menu-item" data-section="profile">
+                    <i class="fas fa-user-edit"></i> Edit Profile
+                </button>
+            </div>
+        </div>
+
+        <div class="dashboard-content">
+            <!-- Overview Section -->
+            <section id="overview" class="content-section active">
+                <div class="dashboard-header">
+                    <h2>Dashboard Overview</h2>
+                    <div class="date-filter">
+                        <select id="timeRange">
+                            <option value="today">Today</option>
+                            <option value="week">This Week</option>
+                            <option value="month">This Month</option>
+                            <option value="year">This Year</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-shopping-cart"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3>Total Orders</h3>
+                            <p id="totalOrders">0</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3>Pending Orders</h3>
+                            <p id="pendingOrders">0</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3>Confirmed Orders</h3>
+                            <p id="confirmedOrders">0</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-truck"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3>Delivered Orders</h3>
+                            <p id="deliveredOrders">0</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-rupee-sign"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3>Total Revenue</h3>
+                            <p id="totalRevenue">₹0</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3>Total Customers</h3>
+                            <p id="totalCustomers">0</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dashboard-grid">
+                    <div class="dashboard-card recent-orders">
+                        <div class="card-header">
+                            <h3>Recent Orders</h3>
+                            <a href="#" class="view-all">View All</a>
+                        </div>
+                        <div class="recent-orders-list" id="recentOrdersList">
+                            <!-- Recent orders will be loaded here -->
+                        </div>
+                    </div>
+
+                    <div class="dashboard-card top-products">
+                        <div class="card-header">
+                            <h3>Top Selling Products</h3>
+                            <a href="#" class="view-all">View All</a>
+                        </div>
+                        <div class="top-products-list" id="topProductsList">
+                            <!-- Top products will be loaded here -->
+                        </div>
+                    </div>
+
+                    <div class="dashboard-card activity-feed">
+                        <div class="card-header">
+                            <h3>Recent Activity</h3>
+                            <a href="#" class="view-all">View All</a>
+                        </div>
+                        <div class="activity-list" id="activityList">
+                            <!-- Activity feed will be loaded here -->
+                        </div>
+                    </div>
+
+                    <div class="dashboard-card delivery-status">
+                        <div class="card-header">
+                            <h3>Delivery Status</h3>
+                            <a href="#" class="view-all">View All</a>
+                        </div>
+                        <div class="delivery-status-list" id="deliveryStatusList">
+                            <!-- Delivery status will be loaded here -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- All Orders Section -->
+            <section id="all-orders" class="content-section">
+                <h2>All Orders</h2>
+                <div class="orders-list" id="allOrdersList">
+                    <!-- All orders will be loaded here -->
+                </div>
+            </section>
+
+            <!-- Pending Orders Section -->
+            <section id="pending-orders" class="content-section">
+                <h2>Pending Orders</h2>
+                <div class="orders-list" id="pendingOrdersList">
+                    <!-- Pending orders will be loaded here -->
+                </div>
+            </section>
+
+            <!-- Confirmed Orders Section -->
+            <section id="confirmed-orders" class="content-section">
+                <h2>Confirmed Orders</h2>
+                <div class="orders-list" id="confirmedOrdersList">
+                    <!-- Confirmed orders will be loaded here -->
+                </div>
+            </section>
+
+            <!-- Delivered Orders Section -->
+            <section id="delivered-orders" class="content-section">
+                <h2>Delivered Orders</h2>
+                <div class="orders-list" id="deliveredOrdersList">
+                    <!-- Delivered orders will be loaded here -->
+                </div>
+            </section>
+
+            <!-- Profile Section -->
+            <section id="profile" class="content-section">
+                <h2>Edit Profile</h2>
+                <form id="profileForm" onsubmit="return updateProfile(event)">
+                    <div class="form-group">
+                        <label>Store Name</label>
+                        <input type="text" id="editStoreName" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" id="editEmail" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Phone Number</label>
+                        <input type="tel" id="editPhone" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Store Address</label>
+                        <textarea id="editAddress" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Current Password</label>
+                        <input type="password" id="currentPassword">
+                    </div>
+                    <div class="form-group">
+                        <label>New Password</label>
+                        <input type="password" id="newPassword">
+                    </div>
+                    <button type="submit" class="save-btn">Save Changes</button>
+                </form>
+            </section>
+        </div>
+    </main>
+
+    <script src="seller-dashboard.js"></script>
+</body>
+</html> 
